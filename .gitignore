@@ -1,0 +1,63 @@
+# Visual Studio - common ignores
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.csproj.user
+*.vbproj.user
+*.dbmdl
+*.opendb
+*.VC.db
+
+# Build results
+[Bb]in/
+[Oo]bj/
+build/
+Debug/
+Release/
+x64/
+x86/
+*.ilk
+*.meta
+*.obj
+*.pdb
+*.exe
+*.dll
+*.cache
+
+# NuGet
+*.nupkg
+packages/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# User-specific files
+*.log
+*.vspscc
+*.sln.docstates
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Temporary files
+~$*
+
+# Other
+artifacts/
+project.lock.json
+project.fragment.lock.json
+
+# Keep solution and project files tracked
+!*.sln
+!*.csproj
