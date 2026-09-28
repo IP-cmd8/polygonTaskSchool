@@ -12,9 +12,15 @@ namespace polygonTaskSchool
 {
     public partial class Form1 : Form
     {
+        Circle A;
+        Triangle B;
+        Square C;
         public Form1()
         {
             InitializeComponent();
+            A = new Circle(100, 100);
+            B = new Triangle(100, 100);
+            C = new Square(100, 100);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -25,11 +31,8 @@ namespace polygonTaskSchool
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            Circle A = new Circle(100, 100);
             A.Draw(G);
-            Triangle B = new Triangle(200, 100);
             B.Draw(G);
-            Square C = new Square(300, 100);
             C.Draw(G);
         }
     }
