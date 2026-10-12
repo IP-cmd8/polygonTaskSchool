@@ -17,6 +17,7 @@ namespace polygonTaskSchool
         protected static int R;
         protected static Color c;
         protected static Pen p;
+        protected bool pressed;
         public Shape(int xx, int yy)
         {
             x = xx;
@@ -24,7 +25,7 @@ namespace polygonTaskSchool
         }
         static Shape()
         {
-            R = 100;
+            R = 50;
             c = Color.Red;
             p = new Pen(c);
         }
@@ -39,6 +40,11 @@ namespace polygonTaskSchool
             get { return y; }
             set { y = value; }
         }
+        public bool IsPressed
+        {
+            get {return pressed;}
+            set { pressed = value;}
+        }
     }
 
     class Circle : Shape
@@ -50,7 +56,7 @@ namespace polygonTaskSchool
         }
         public override bool IsInside(int xx, int yy)
         {
-            if ((xx - x)* (xx-x)+ (yy-y) * (yy-y) <= (R * R))
+            if ((xx - x) * (xx-x) + (yy-y) * (yy-y) <= (R * R))
             {
                 return true;
             }
@@ -77,7 +83,7 @@ namespace polygonTaskSchool
             float areaBCP = calculateHerons(vertexTwo, vertexThree, mouseP);
             float areaCAP = calculateHerons(vertexThree, vertexOne, mouseP);
 
-            if (Math.Abs(areaABC - (areaABP + areaBCP + areaCAP)) < 0.01f)
+            if (Math.Abs(areaABC - (areaABP + areaBCP + areaCAP)) < 0.1f)
             {
                 return true;
             }

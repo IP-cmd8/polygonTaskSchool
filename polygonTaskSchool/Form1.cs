@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,7 @@ namespace polygonTaskSchool
         Circle A;
         Triangle B;
         Square C;
-        Shape[] shapes;
-        Shape[] selectedShapes;
+        List <Shape> shapes;
         int lastX, lastY;
         public Form1()
         {
@@ -25,8 +25,7 @@ namespace polygonTaskSchool
             A = new Circle(100, 100);
             B = new Triangle(100, 100);
             C = new Square(100, 100);
-            shapes =  new Shape[] { A, B, C };
-            selectedShapes = new Shape[3];
+            shapes = new List<Shape>{A, B, C};
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,24 +45,26 @@ namespace polygonTaskSchool
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            int k = 0;
             lastX = e.X;
             lastY = e.Y;
+            bool flag = false;
             foreach (Shape shape in shapes)
             {
                 if (shape.IsInside(e.X, e.Y))
                 {
-                    selectedShapes[k] = shape;
-                    k++;
+                    shape.IsPressed = true;
+                    flag = true;
+
                 }
             }
+            if(!flag) { shapes.Add(new Circle(e.X, e.Y));  Refresh();}
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            for (int i = 0; i < selectedShapes.Length; i++)
-            {
-                selectedShapes[i] = null;   
+            foreach (Shape shape in shapes)
+            { 
+                shape.IsPressed = false;
             }
         }
 
@@ -73,11 +74,11 @@ namespace polygonTaskSchool
             int dY = e.Y - lastY;
             if (e.Button == MouseButtons.Left)
             {
-                foreach (Shape shape in selectedShapes)
+                foreach (Shape shape in shapes)
                 {
-                    if (shape == null) { continue; }
-                    shape.X += e.X - lastX;
-                    shape.Y += e.Y - lastY;
+                    if (shape.IsPressed == false) { continue; }
+                    shape.X += dX;
+                    shape.Y += dY;
                 }
                 lastX = e.X;
                 lastY = e.Y;
