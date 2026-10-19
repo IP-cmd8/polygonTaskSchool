@@ -25,13 +25,14 @@ namespace polygonTaskSchool
         }
         static Shape()
         {
-            R = 50;
+            R = 75;
             c = Color.Red;
             p = new Pen(c);
         }
         public abstract void Draw(Graphics G);
         public abstract bool IsInside(int x, int y);
-        public int X{
+        public int X
+        {
             get { return x; }
             set { x = value; }
         }
@@ -42,8 +43,8 @@ namespace polygonTaskSchool
         }
         public bool IsPressed
         {
-            get {return pressed;}
-            set { pressed = value;}
+            get { return pressed; }
+            set { pressed = value; }
         }
     }
 
@@ -52,11 +53,11 @@ namespace polygonTaskSchool
         public Circle(int xx, int yy) : base(xx, yy) { }
         public override void Draw(Graphics G)
         {
-            G.DrawEllipse(p, x - R, y - R, R*2, R*2);
+            G.DrawEllipse(p, x - R, y - R, R * 2, R * 2);
         }
         public override bool IsInside(int xx, int yy)
         {
-            if ((xx - x) * (xx-x) + (yy-y) * (yy-y) <= (R * R))
+            if ((xx - x) * (xx - x) + (yy - y) * (yy - y) <= (R * R))
             {
                 return true;
             }
@@ -69,11 +70,11 @@ namespace polygonTaskSchool
         public Triangle(int xx, int yy) : base(xx, yy) { }
         public override void Draw(Graphics G)
         {
-            G.DrawPolygon(p, new PointF[] {new PointF(x,y-R), new PointF(x-R * (float)Math.Sqrt(3)/2,y + R/2), new PointF(x + R * (float)Math.Sqrt(3) / 2, y + R / 2) }); //x = X + Rcos0, y = Y + Rsin0
+            G.DrawPolygon(p, new PointF[] { new PointF(x, y - R), new PointF(x - R * (float)Math.Sqrt(3) / 2, y + R / 2), new PointF(x + R * (float)Math.Sqrt(3) / 2, y + R / 2) }); //x = X + Rcos0, y = Y + Rsin0
         }
         public override bool IsInside(int xx, int yy)
         {
-            PointF vertexOne = new Point(x,y - R);
+            PointF vertexOne = new Point(x, y - R);
             PointF vertexTwo = new PointF(x - R * (float)Math.Sqrt(3) / 2, y + R / 2);
             PointF vertexThree = new PointF(x + R * (float)Math.Sqrt(3) / 2, y + R / 2);
             PointF mouseP = new PointF(xx, yy);
@@ -105,12 +106,12 @@ namespace polygonTaskSchool
         public override void Draw(Graphics G)
         {
             float sideLength = R * (float)Math.Sqrt(2);
-            G.DrawRectangle(p, -sideLength/2 + x, -sideLength/2 + y,sideLength,sideLength);
+            G.DrawRectangle(p, -sideLength / 2 + x, -sideLength / 2 + y, sideLength, sideLength);
         }
         public override bool IsInside(int xx, int yy)
         {
             float sideLength = R * (float)Math.Sqrt(2);
-            if (Math.Abs(xx - x) <= sideLength/2 && Math.Abs(yy - y) <= sideLength/2)
+            if (Math.Abs(xx - x) <= sideLength / 2 && Math.Abs(yy - y) <= sideLength / 2)
             {
                 return true;
             }
