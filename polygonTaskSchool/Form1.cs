@@ -61,7 +61,10 @@ namespace polygonTaskSchool
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            for (int i = shapes.Count - 1; i >= 0; i--)
+            {
+                shapes.RemoveAt(i);
+            }Refresh();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -76,16 +79,24 @@ namespace polygonTaskSchool
         }
         private void drawHullSlow(Graphics e)
         {
+
             if (shapes.Count >= 3)
             {
+                foreach (Shape shape in shapes)
+                {
+                    shape.IsConnected = false;
+                }
                 for (int i = 0; i <= shapes.Count - 1; i++)
                 {
+                    
                     for (int j = i + 1; j <= shapes.Count - 1; j++)
                     {
+                        
                         int down = 0;
                         int up = 0;
                         float k = 0;
                         float b = 0;
+      
                         if (shapes[i].X != shapes[j].X)
                         {
                             k = (float)(shapes[i].Y - shapes[j].Y) / (shapes[i].X - shapes[j].X);
@@ -100,7 +111,11 @@ namespace polygonTaskSchool
                             if (up == 0 || down == 0)
                             {
                                 e.DrawLine(new Pen(Color.Red), (float)shapes[i].X, shapes[i].Y, shapes[j].X, shapes[j].Y);
+                                shapes[j].IsConnected = true;
+                                shapes[i].IsConnected = true;
                             }
+                            
+
                         }
                         else
                         {
@@ -113,13 +128,14 @@ namespace polygonTaskSchool
                             if (up == 0 || down == 0)
                             {
                                 e.DrawLine(new Pen(Color.Red), (float)shapes[i].X, shapes[i].Y, shapes[j].X, shapes[j].Y);
+                                shapes[j].IsConnected = true;
+                                shapes[i].IsConnected = true;
                             }
-                            {
+                           
 
-                            }
                         }
-
                     }
+
                 }
             }
         }
@@ -163,13 +179,21 @@ namespace polygonTaskSchool
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            foreach (Shape shape in shapes)
+            
+            if(shapes.Count >= 4)
             {
-                shape.IsPressed = false;
+                for (int i = shapes.Count - 1; i >= 0; i--)
+                {
+                    shapes[i].IsPressed = false;
+                    if (!shapes[i].IsConnected) { shapes.RemoveAt(i); Refresh(); }
+                }
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
+        }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {

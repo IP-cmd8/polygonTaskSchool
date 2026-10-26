@@ -18,14 +18,17 @@ namespace polygonTaskSchool
         protected static Color c;
         protected static Pen p;
         protected bool pressed;
+        protected bool isConnected;
         public Shape(int xx, int yy)
         {
             x = xx;
             y = yy;
+            pressed = false;
+            isConnected = false;
         }
         static Shape()
         {
-            R = 75;
+            R = 50;
             c = Color.Red;
             p = new Pen(c);
         }
@@ -45,6 +48,11 @@ namespace polygonTaskSchool
         {
             get { return pressed; }
             set { pressed = value; }
+        }
+        public bool IsConnected
+        {
+            get { return isConnected; }
+            set { isConnected = value; }
         }
     }
 
