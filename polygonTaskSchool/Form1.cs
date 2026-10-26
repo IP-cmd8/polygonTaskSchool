@@ -179,12 +179,14 @@ namespace polygonTaskSchool
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            
-            if(shapes.Count >= 4)
+            foreach (Shape shape in shapes)
+            {
+                shape.IsPressed = false;
+            }
+            if (shapes.Count >= 4)
             {
                 for (int i = shapes.Count - 1; i >= 0; i--)
                 {
-                    shapes[i].IsPressed = false;
                     if (!shapes[i].IsConnected) { shapes.RemoveAt(i); Refresh(); }
                 }
             }
