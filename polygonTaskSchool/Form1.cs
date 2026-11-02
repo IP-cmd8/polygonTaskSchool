@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace polygonTaskSchool
 {
@@ -70,12 +71,32 @@ namespace polygonTaskSchool
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-
+            drawHullSlow(G);
+            bool anyPressed = false;
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                if (shapes[i].IsPressed) { anyPressed = true; }
+            }
+            if (shapes.Count >= 4 && !anyPressed)
+            {
+                for(int i = 0; i < shapes.Count-1; i++)
+                {
+                    shapes[i].Draw(G);
+                }
+                
+                if(shapes[shapes.Count - 1].IsConnected)
+                {
+                    shapes[shapes.Count - 1].Draw(G);
+                }
+            }
+            else { 
             foreach (Shape shape in shapes)
             {
+                
                 shape.Draw(G);
             }
-            drawHullSlow(G);
+            }
+
         }
         private void drawHullSlow(Graphics e)
         {
@@ -100,7 +121,7 @@ namespace polygonTaskSchool
                         if (shapes[i].X != shapes[j].X)
                         {
                             k = (float)(shapes[i].Y - shapes[j].Y) / (shapes[i].X - shapes[j].X);
-                            b = (shapes[i].Y - k * shapes[i].X);
+                            b = shapes[i].Y - k * shapes[i].X;
 
                             for (int p = 0; p <= shapes.Count - 1; p++)
                             {
@@ -160,6 +181,11 @@ namespace polygonTaskSchool
                     shapes.Add(CreateShape(e.X, e.Y));
                     Refresh();
                 }
+                List<Shape> copyShapes = new List<Shape>(shapes); 
+                copyShapes.Append(CreateShape(e.X, e.Y));
+             
+
+
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -199,6 +225,7 @@ namespace polygonTaskSchool
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
+            Refresh();
             int dX = e.X - lastX;
             int dY = e.Y - lastY;
             if (e.Button == MouseButtons.Left)

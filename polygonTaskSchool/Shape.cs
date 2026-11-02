@@ -28,7 +28,7 @@ namespace polygonTaskSchool
         }
         static Shape()
         {
-            R = 50;
+            R = 30;
             c = Color.Red;
             p = new Pen(c);
         }
